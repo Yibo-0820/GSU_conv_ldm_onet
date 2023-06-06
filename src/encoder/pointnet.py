@@ -6,6 +6,7 @@ from torch_scatter import scatter_mean, scatter_max
 from src.common import coordinate2index, normalize_coordinate, normalize_3d_coordinate, map2local
 from src.encoder.unet import UNet
 from src.encoder.unet3d import UNet3D
+from src.encoder.VAE import BetaVAE
 
 
 class LocalPoolPointnet(nn.Module):
@@ -17,7 +18,7 @@ class LocalPoolPointnet(nn.Module):
         dim (int): input points dimension
         hidden_dim (int): hidden dimension of the network
         scatter_type (str): feature aggregation when doing local pooling
-        unet (bool): weather to use U-Net
+        unet (bool): whether to use U-Net
         unet_kwargs (str): U-Net parameters
         unet3d (bool): weather to use 3D U-Net
         unet3d_kwargs (str): 3D U-Net parameters
@@ -29,9 +30,10 @@ class LocalPoolPointnet(nn.Module):
     '''
 
     def __init__(self, c_dim=128, dim=3, hidden_dim=128, scatter_type='max', 
-                 unet=False, unet_kwargs=None, unet3d=False, unet3d_kwargs=None, 
+                 unet=False, unet_kwargs=None, unet3d=False, unet3d_kwargs=None, vae=False, vae_kwargs=None,
                  plane_resolution=None, grid_resolution=None, plane_type='xz', padding=0.1, n_blocks=5):
         super().__init__()
+        self.vae_loss = None
         self.c_dim = c_dim
 
         self.fc_pos = nn.Linear(dim, 2*hidden_dim)
@@ -52,6 +54,11 @@ class LocalPoolPointnet(nn.Module):
             self.unet3d = UNet3D(**unet3d_kwargs)
         else:
             self.unet3d = None
+
+        if vae:
+            self.vae = BetaVAE(self.unet.conv_final.out_channels, **vae_kwargs)
+        else:
+            self.vae = None
 
         self.reso_plane = plane_resolution
         self.reso_grid = grid_resolution
@@ -80,6 +87,10 @@ class LocalPoolPointnet(nn.Module):
         # process the plane features with UNet
         if self.unet is not None:
             fea_plane = self.unet(fea_plane)
+        if self.vae is not None:
+            out = self.vae.forward(fea_plane)
+            fea_plane = out[0]
+            self.vae_loss = self.vae.loss_function(*out)
 
         return fea_plane
 

@@ -25,16 +25,17 @@ model:
       start_filts: 32
     vae: True
     vae_kwargs:
-      latent_dim: 16
-      kld_weight: 1e-5
+      latent_dim: 2048
+      kld_weight: 0.01
+      kl_std: 0.25
   decoder: simple_local
   decoder_kwargs:
     sample_mode: bilinear # bilinear / nearest
     hidden_size: 32
   c_dim: 32
 training:
-  out_dir: out/pointcloud/room_3plane
-  batch_size: 8
+  out_dir: out/pointcloud/room_3plane_vae_overfitting_2048_2_512
+  batch_size: 1
   model_selection_metric: iou
   model_selection_mode: maximize
   print_every: 100

@@ -138,5 +138,9 @@ class Trainer(BaseTrainer):
         loss_i = F.binary_cross_entropy_with_logits(
             logits, occ, reduction='none')
         loss = loss_i.sum(-1).mean()
+        total_loss = loss + self.model.encoder.vae_loss
+        # print('conv loss: ', loss)
+        # print('vae loss: ', self.model.encoder.vae_loss)
+        # print('ratio:', loss / self.model.encoder.vae_loss)
 
-        return loss
+        return total_loss
