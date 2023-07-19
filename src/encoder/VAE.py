@@ -42,6 +42,7 @@ class BetaVAE(nn.Module):
         if hidden_dims is None:
             # hidden_dims = [32, 64, 128, 256, 512]
             hidden_dims = [512, 512, 512, 512, 512]
+            # hidden_dims = [256, 256, 512, 512, 1024]
 
         self.hidden_dims = hidden_dims
 
@@ -94,7 +95,8 @@ class BetaVAE(nn.Module):
             nn.LeakyReLU(),
             nn.Conv2d(hidden_dims[-1], out_channels=self.in_channels,  # changed from 3 to in_channels
                       kernel_size=3, padding=1),
-            nn.Tanh())
+            # nn.Tanh()
+        )
 
         # print(self)
 
@@ -188,6 +190,18 @@ class BetaVAE(nn.Module):
         :return: (Tensor)
         """
         z = torch.randn(num_samples, self.latent_dim)
+        # data = torch.randn(num_samples, 96, 128, 128)
+        # data = data.cuda()
+        # mu, log_var = self.encode(data)
+        # gt_log_var = 2 * torch.log(torch.ones_like(log_var) * self.kl_std)
+        # z = self.reparameterize(torch.zeros_like(mu), gt_log_var)
+
+        # z = torch.randn(num_samples, self.latent_dim)
+        # mu = torch.zeros_like(z)
+        # log_var = torch.zeros_like(z)
+        # std = torch.exp(0.5 * log_var)
+        # std *= self.kl_std  # Scale the standard deviation by kl_std
+        # z = z * std + mu
 
         z = z.cuda()
 

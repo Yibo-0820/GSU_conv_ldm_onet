@@ -1,0 +1,41 @@
+method: diffusion
+
+num_epochs: 50001
+log_freq: 5000
+diff_lr: 0.00005
+
+diffusion_specs:
+  timesteps: 1000
+  objective: pred_x0
+  loss_type: l2
+
+diffusion_model_specs:
+  dim: 1024
+  dim_in_out: 1024
+  depth: 5
+  ff_dropout: 0.3
+  cond: false
+
+training:
+  out_dir: out/pointcloud/diff_final8_50
+  batch_size: 8
+  model_selection_metric: mse
+  model_selection_mode: maximize
+  print_every: 100
+  visualize_every: 10000
+  validate_every: 10000
+  checkpoint_every: 1000
+  backup_every: 1000
+  n_workers: 4
+  n_workers_val: 4
+test:
+  threshold: 0.2
+  eval_mesh: true
+  eval_pointcloud: false
+  remove_wall: true
+  model_file: model_34000.pt
+generation:
+  vis_n_outputs: 2
+  refine: false
+  n_x: 128
+  n_z: 1

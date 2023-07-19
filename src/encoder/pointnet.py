@@ -56,7 +56,7 @@ class LocalPoolPointnet(nn.Module):
             self.unet3d = None
 
         if vae:
-            self.vae = BetaVAE(self.unet.conv_final.out_channels, **vae_kwargs)
+            self.vae = BetaVAE(self.unet.conv_final.out_channels*3, **vae_kwargs)
         else:
             self.vae = None
 
@@ -87,10 +87,27 @@ class LocalPoolPointnet(nn.Module):
         # process the plane features with UNet
         if self.unet is not None:
             fea_plane = self.unet(fea_plane)
-        if self.vae is not None:
-            out = self.vae.forward(fea_plane)
-            fea_plane = out[0]
-            self.vae_loss = self.vae.loss_function(*out)
+            # print(fea_plane.shape)
+            # filename = "data/fea_planes.pt"
+            # with open(filename, "ab") as f:
+            #     torch.save(fea_plane, f)
+            # filename = "data/fea_planes_train_demo.pt"
+            # try:
+            #     existing_data = torch.load(filename)
+            #     all_data = torch.cat((existing_data, fea_plane), dim=0)
+            #     torch.save(all_data, filename)
+            # except FileNotFoundError:
+            #     torch.save(fea_plane, filename)
+        #     try:
+        #         existing_data = torch.load(filename)
+        #         existing_data.append(fea_plane)
+        #         torch.save(existing_data, filename)
+        #     except FileNotFoundError:
+        #         torch.save([fea_plane], filename)
+        # if self.vae is not None:
+        #     out = self.vae.forward(fea_plane)
+        #     fea_plane = out[0]
+        #     self.vae_loss = self.vae.loss_function(*out)
 
         return fea_plane
 
@@ -165,8 +182,78 @@ class LocalPoolPointnet(nn.Module):
             fea['xy'] = self.generate_plane_features(p, c, plane='xy')
         if 'yz' in self.plane_type:
             fea['yz'] = self.generate_plane_features(p, c, plane='yz')
+        original_fea = torch.cat((fea['xz'], fea['xy'], fea['yz']), dim=1)
+        # mean = original_fea.mean()
+        # std = original_fea.std()
+        #
+        # # Normalize the tensor
+        # normalized_fea = (original_fea - mean) / std
+        # print(normalized_fea)
+        # print(original_fea.shape)
 
-        return fea
+        # filename = "data/original_fea_train_6.pt"
+        # try:
+        #     existing_data = torch.load(filename)
+        #     existing_data.append(original_fea)
+        #     torch.save(existing_data, filename)
+        # except FileNotFoundError:
+        #     torch.save([original_fea], filename)
+        if self.vae is not None:
+            out = self.vae.forward(original_fea)
+            fea_cat = out[0]
+            # fea_cat = self.vae.sample(1)
+            # latent = self.vae.get_latent(original_fea)
+            # filename = "data/final_std_1_latent_train_1_new.pt"
+            # try:
+            #     existing_data = torch.load(filename)
+            #     existing_data.append(latent)
+            #     torch.save(existing_data, filename)
+            # except FileNotFoundError:
+            #     torch.save([latent], filename)
+            self.vae_loss = self.vae.loss_function(*out)
+
+            diff_out = "data/final/generation_1new.pt"
+            diff_data = torch.load(diff_out)
+            z = diff_data[11, :]
+            z = torch.unsqueeze(z, dim=0)
+            print(z.shape)
+            new_reconstructed_data = self.vae.decode(z)
+            fea_cat = new_reconstructed_data[0]
+            fea_cat = torch.unsqueeze(fea_cat, dim=0)
+            # print(fea_cat.shape)
+
+        # fea_xz = fea[:, :32, :, :]
+        #
+        # # Retrieve fea['xy']
+        # fea_xy = fea[:, 32:64, :, :]
+        #
+        # # Retrieve fea['yz']
+        # fea_yz = fea[:, 64:, :, :]
+        #
+        # # Create the fea dictionary
+        # fea = {'xz': fea_xz, 'xy': fea_xy, 'yz': fea_yz}
+
+        '''generate'''
+        # filename = "data/vae_sample/generate_11.pt"
+        # filename = "data/std2.5_diff_vae_out_1/generate_82.pt"
+        # filename = "data/std_2.5_weight_1/reconstructed_41.pt"
+        # fea_all = torch.load(filename)
+        # fea_cat = fea_all
+        # fea_cat = fea_cat.squeeze(0)
+        # print(fea_cat.shape)
+        # print(fea_cat)
+        fea_xz = fea_cat[:, :32, :, :]
+
+        # Retrieve fea['xy']
+        fea_xy = fea_cat[:, 32:64, :, :]
+
+        # Retrieve fea['yz']
+        fea_yz = fea_cat[:, 64:, :, :]
+
+        # Create the fea dictionary
+        fea_new = {'xz': fea_xz, 'xy': fea_xy, 'yz': fea_yz}
+
+        return fea_new
 
 class PatchLocalPoolPointnet(nn.Module):
     ''' PointNet-based encoder network with ResNet blocks.

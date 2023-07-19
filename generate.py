@@ -72,6 +72,11 @@ model.eval()
 # Count how many models already created
 model_counter = defaultdict(int)
 
+vae_input_folder = "data/fea_cat_small2"
+if not os.path.exists(vae_input_folder):
+    os.makedirs(vae_input_folder)
+
+
 for it, data in enumerate(tqdm(test_loader)):
     # Output folders
     mesh_dir = os.path.join(generation_dir, 'meshes')
@@ -146,6 +151,12 @@ for it, data in enumerate(tqdm(test_loader)):
             out = generator.generate_mesh_sliding(data)
         else:
             out = generator.generate_mesh(data)
+            # inputs = data.get('inputs', torch.empty(1, 0)).to(device)
+            # fea = generator.model.encode_inputs(inputs)
+            # original_fea = torch.cat((fea['xz'], fea['xy'], fea['yz']), dim=1)
+            # data_file_path = os.path.join(vae_input_folder, f"data{it+1}.pt")
+            # torch.save(original_fea, data_file_path)
+
         time_dict['mesh'] = time.time() - t0
 
         # Get statistics
@@ -163,6 +174,10 @@ for it, data in enumerate(tqdm(test_loader)):
     if generate_pointcloud:
         t0 = time.time()
         pointcloud = generator.generate_pointcloud(data)
+        # fea = generator.encoder.forward(data)
+        # original_fea = torch.cat((fea['xz'], fea['xy'], fea['yz']), dim=1)
+        # print(original_fea.shape)
+        # original_fea_all.append(original_fea)
         time_dict['pcl'] = time.time() - t0
         pointcloud_out_file = os.path.join(
             pointcloud_dir, '%s.ply' % modelname)

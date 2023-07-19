@@ -23,7 +23,7 @@ model:
       depth: 5
       merge_mode: concat
       start_filts: 32
-    vae: True
+    vae: False
     vae_kwargs:
       latent_dim: 16
       kld_weight: 1e-5
@@ -33,7 +33,7 @@ model:
     hidden_size: 32
   c_dim: 32
 training:
-  out_dir: out/pointcloud/room_3plane
+  out_dir: out/pointcloud/diff_std_2.5_weight_1
   batch_size: 8
   model_selection_metric: iou
   model_selection_mode: maximize
