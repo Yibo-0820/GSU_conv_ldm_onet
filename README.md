@@ -1,7 +1,7 @@
 # Creating Novel Scenes using Latent Diffusion Model
 
 <div style="text-align: center">
-<img src="media/teaser_matterport.gif" width="600"/>
+<img src="media/3e536386519667cdb7d62d2fc2326e2.png" width="600"/>
 </div>
 
 
