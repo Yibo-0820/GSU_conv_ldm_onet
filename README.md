@@ -1,25 +1,8 @@
-# Convolutional Occupancy Networks
-[**Paper**](https://arxiv.org/pdf/2003.04618.pdf) | [**Supplementary**](http://www.cvlibs.net/publications/Peng2020ECCV_supplementary.pdf) | [**Video**](https://www.youtube.com/watch?v=EmauovgrDSM) | [**Teaser Video**](https://youtu.be/k0monzIcjUo) | [**Project Page**](https://pengsongyou.github.io/conv_onet) | [**Blog Post**](https://autonomousvision.github.io/convolutional-occupancy-networks/) <br>
+# Creating Novel Scenes using Latent Diffusion Model
 
 <div style="text-align: center">
 <img src="media/teaser_matterport.gif" width="600"/>
 </div>
-
-This repository contains the implementation of the paper:
-
-Convolutional Occupancy Networks  
-[Songyou Peng](https://pengsongyou.github.io/), [Michael Niemeyer](https://m-niemeyer.github.io/), [Lars Mescheder](https://is.tuebingen.mpg.de/person/lmescheder), [Marc Pollefeys](https://www.inf.ethz.ch/personal/pomarc/) and [Andreas Geiger](http://www.cvlibs.net/)  
-**ECCV 2020 (spotlight)**  
-
-If you find our code or paper useful, please consider citing
-```bibtex
-@inproceedings{Peng2020ECCV,
- author =  {Peng, Songyou and Niemeyer, Michael and Mescheder, Lars and Pollefeys, Marc and Geiger, Andreas},
- title = {Convolutional Occupancy Networks},
- booktitle = {European Conference on Computer Vision (ECCV)},
- year = {2020}}
-```
-Contact [Songyou Peng](mailto:songyou.pp@gmail.com) for questions, comments and reporting bugs.
 
 
 ## Installation
