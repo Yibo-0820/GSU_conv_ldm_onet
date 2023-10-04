@@ -66,39 +66,7 @@ When you have installed all binary dependencies and obtained the preprocessed da
 ### Mesh Generation
 To generate meshes using a trained model, use
 ```
-python generate.py CONFIG.yaml
-```
-where you replace `CONFIG.yaml` with the correct config file.
-
-**Use a pre-trained model**  
-The easiest way is to use a pre-trained model. You can do this by using one of the config files under the `pretrained` folders.
-
-For example, for 3D reconstruction from noisy point cloud with our 3-plane model on the synthetic room dataset, you can simply run:
-```
-python generate.py configs/pointcloud/pretrained/room_3plane.yaml
-```
-The script will automatically download the pretrained model and run the generation. You can find the outputs in the `out/.../generation_pretrained` folders
-
-Note that the config files are only for generation, not for training new models: when these configs are used for training, the model will be trained from scratch, but during inference our code will still use the pretrained model.
-
-
-We provide the following pretrained models:
-```
-pointcloud/shapenet_1plane.pt
-pointcloud/shapenet_3plane.pt
-pointcloud/shapenet_grid32.pt
-pointcloud/shapenet_3plane_partial.pt
-pointcloud/shapenet_pointconv.pt
-pointcloud/room_1plane.pt
-pointcloud/room_3plane.pt
-pointcloud/room_grid32.pt
-pointcloud/room_grid64.pt
-pointcloud/room_combine.pt
-pointcloud/room_pointconv.pt
-pointcloud_crop/room_grid64.pt
-voxel/voxel_shapenet_1plane.pt
-voxel/voxel_shapenet_3plane.pt
-voxel/voxel_shapenet_grid32.pt
+python generate.py configs/pointcloud/room_3plane_vae.yaml
 ```
 
 ### Evaluation
