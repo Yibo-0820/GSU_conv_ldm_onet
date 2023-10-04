@@ -30,14 +30,6 @@ First, run the script to get the demo data:
 ```
 bash scripts/download_demo_data.sh
 ```
-### Reconstruct Large-Scale Matterport3D Scene
-You can now quickly test our code on the real-world scene shown in the teaser. To this end, simply run:
-```
-python generate.py configs/pointcloud_crop/demo_matterport.yaml
-```
-This script should create a folder `out/demo_matterport/generation` where the output meshes and input point cloud are stored.
-
-**Note**: This experiment corresponds to our **fully convolutional model**, which we train only on the small crops from our synthetic room dataset. This model can be directly applied to large-scale real-world scenes with real units and generate meshes in a sliding-window manner, as shown in the [teaser](media/teaser_matterport.gif). More details can be found in section 6 of our [supplementary material](http://www.cvlibs.net/publications/Peng2020ECCV_supplementary.pdf). For training, you can use the script `pointcloud_crop/room_grid64.yaml`.
 
 
 ### Reconstruct Synthetic Indoor Scene
