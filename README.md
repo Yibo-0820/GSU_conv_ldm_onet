@@ -138,7 +138,7 @@ The script takes the meshes generated in the previous step and evaluates them us
 ### Training
 Finally, to train a new network from scratch, run:
 ```
-python train.py CONFIG.yaml
+python train.py configs/pointcloud/room_3plane_vae.yaml
 ```
 For available training options, please take a look at `configs/default.yaml`.
 
