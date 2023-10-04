@@ -52,10 +52,7 @@ python generate.py configs/pointcloud/demo_syn_room.yaml
 ## Dataset
 
 To evaluate a pretrained model or train a new model from scratch, you have to obtain the respective dataset.
-In this paper, we consider 4 different datasets:
-
-### ShapeNet
-You can download the dataset (73.4 GB) by running the [script](https://github.com/autonomousvision/occupancy_networks#preprocessed-data) from Occupancy Networks. After, you should have the dataset in `data/ShapeNet` folder.
+In this paper, we consider the following dataset:
 
 ### Synthetic Indoor Scene Dataset
 For scene-level reconstruction, we create a synthetic dataset of 5000
@@ -70,20 +67,6 @@ bash scripts/download_data.sh
 This script should download and unpack the data automatically into the `data/synthetic_room_dataset` folder.  
 **Note**: We also provide **point-wise semantic labels** in the dataset, which might be useful.
 
-
-Alternatively, you can also preprocess the dataset yourself.
-To this end, you can:
-* download the ShapeNet dataset as described above.
-* check `scripts/dataset_synthetic_room/build_dataset.py`, modify the path and run the code.
-
-### Matterport3D
-Download Matterport3D dataset from [the official website](https://niessner.github.io/Matterport/). And then, use `scripts/dataset_matterport/build_dataset.py` to preprocess one of your favorite scenes. Put the processed data into `data/Matterport3D_processed` folder.
-
-### ScanNet
-Download ScanNet v2 data from the [official ScanNet website](https://github.com/ScanNet/ScanNet).
-Then, you can preprocess data with:
-`scripts/dataset_scannet/build_dataset.py` and put into `data/ScanNet` folder.  
-**Note**: Currently, the preprocess script normalizes ScanNet data to a unit cube for the comparison shown in the paper, but you can easily adapt the code to produce data with real-world metric. You can then use our fully convolutional model to run evaluation in a sliding-window manner.
 
 ## Usage
 When you have installed all binary dependencies and obtained the preprocessed data, you are ready to run our pre-trained models and train new models from scratch.
