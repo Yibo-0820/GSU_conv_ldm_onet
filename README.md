@@ -37,7 +37,7 @@ bash scripts/download_demo_data.sh
 <img src="media/demo_syn_room.gif" width="600"/>
 </div>
 
-You can also test on our synthetic room dataset by running: 
+You can then test on our synthetic room dataset by running: 
 ```
 python generate.py configs/pointcloud/demo_syn_room.yaml
 ```
