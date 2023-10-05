@@ -82,11 +82,13 @@ python train.py configs/pointcloud/room_3plane_vae.yaml
 ```
 For available training options, please take a look at `configs/default.yaml`.
 
+
 And for the training of second stage, i.e. the training of diffusion model, run:
 
 ```
 python diffusion model/train_diff.py diffusion model/diff.yaml
 ```
+For available training options, please take a look at `diffusion model/default.yaml`.
 
 ## References
 We adapt code from:
