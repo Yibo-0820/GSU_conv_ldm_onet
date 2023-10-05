@@ -88,8 +88,7 @@ And for the training of second stage, i.e. the training of diffusion model, run:
 python diffusion model/train_diff.py diffusion model/diff.yaml
 ```
 
-## Further Information
-Please also check out the following concurrent works that either tackle similar problems or share similar ideas:
-- [[CVPR 2020] Jiang et al. - Local Implicit Grid Representations for 3D Scenes](https://arxiv.org/abs/2003.08981)
-- [[CVPR 2020] Chibane et al. Implicit Functions in Feature Space for 3D Shape Reconstruction and Completion](https://arxiv.org/abs/2003.01456)
-- [[ECCV 2020] Chabra et al. - Deep Local Shapes: Learning Local SDF Priors for Detailed 3D Reconstruction](https://arxiv.org/abs/2003.10983)
+## References
+We adapt code from
+DiffusionSDF https://github.com/princeton-computational-imaging/Diffusion-SDF
+DALLE2-pytorch https://github.com/lucidrains/DALLE2-pytorch
