@@ -70,20 +70,23 @@ python generate.py configs/pointcloud/room_3plane_vae.yaml
 ```
 
 ### Evaluation
-For evaluation of the models, we provide the script `eval_meshes.py`. You can run it using:
+For evaluation of the models, we provide the script `similarity.py` to find the most similar mesh using chamfer distance in the training data. You can run it using:
 ```
-python eval_meshes.py CONFIG.yaml
+python similarity.py target_mesh source_meshes
 ```
-The script takes the meshes generated in the previous step and evaluates them using a standardized protocol. The output will be written to `.pkl/.csv` files in the corresponding generation folder which can be processed using [pandas](https://pandas.pydata.org/).
-
-**Note:** We follow previous works to use "use 1/10 times the maximal edge length of the current object’s bounding box as unit 1" (see [Section 4 - Metrics](http://www.cvlibs.net/publications/Mescheder2019CVPR.pdf)). In practice, this means that we multiply the Chamfer-L1 by a factor of 10 for reporting the numbers in the paper.
 
 ### Training
-Finally, to train a new network from scratch, run:
+Finally, for the training of first stage, i.e. the joint model of Conv Onet and VAE, run:
 ```
 python train.py configs/pointcloud/room_3plane_vae.yaml
 ```
 For available training options, please take a look at `configs/default.yaml`.
+
+And for the training of second stage, i.e. the training of diffusion model, run:
+
+```
+python train.py configs/pointcloud/room_3plane_vae.yaml
+```
 
 ## Further Information
 Please also check out the following concurrent works that either tackle similar problems or share similar ideas:
