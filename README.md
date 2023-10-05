@@ -91,6 +91,8 @@ python diffusion model/train_diff.py diffusion model/diff.yaml
 ## References
 We adapt code from:
 
-DiffusionSDF https://github.com/princeton-computational-imaging/Diffusion-SDF
+Convolutional Occupancy Networks https://github.com/autonomousvision/convolutional_occupancy_networks (for PointNet encoder)
 
-DALLE2-pytorch https://github.com/lucidrains/DALLE2-pytorch
+Diffusion-SDF https://github.com/princeton-computational-imaging/Diffusion-SDF (for VAE model)
+
+DALLE2-pytorch https://github.com/lucidrains/DALLE2-pytorch (for Diffusion model)
