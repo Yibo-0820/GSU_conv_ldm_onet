@@ -89,6 +89,8 @@ python diffusion model/train_diff.py diffusion model/diff.yaml
 ```
 
 ## References
-We adapt code from
+We adapt code from:
+
 DiffusionSDF https://github.com/princeton-computational-imaging/Diffusion-SDF
+
 DALLE2-pytorch https://github.com/lucidrains/DALLE2-pytorch
